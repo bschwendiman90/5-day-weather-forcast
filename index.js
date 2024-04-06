@@ -30,6 +30,9 @@ searchFormEl.addEventListener('submit', function(event) {
     })
     .then(data => {
         console.log('API response: ', data);
+
+        todayForcastEl.innerHTML = '';
+
         const todayForecastData = {
             city: data.city.name,
             date: data.list[0].dt,
@@ -52,12 +55,6 @@ searchFormEl.addEventListener('submit', function(event) {
 });
 
 function savedSearchButton (apiUrl, cityName) {
-    const apiUrlArray = JSON.parse(localStorage.getItem('apiUrls')) || [];
-    apiUrlArray.forEach(apiUrl => {
-
-        const urlParams = new URLSearchParams(apiUrl);
-        const cityNameEncoded = urlParams.get('http://api.openweathermap.org/data/2.5/forecast?q');
-        const cityName = decodeURIComponent(cityNameEncoded)
 
 
         const button = document.createElement('button')
@@ -82,8 +79,17 @@ function savedSearchButton (apiUrl, cityName) {
 
         savedSearchEl.appendChild(button);
 
-    });
 };
+
+const apiUrlArray = JSON.parse(localStorage.getItem('apiUrls')) || [];
+apiUrlArray.forEach(apiUrl => {
+    // Parse the API URL to extract the city name
+    const urlParams = new URLSearchParams(apiUrl);
+    const cityNameEncoded = urlParams.get('q');
+    const cityName = decodeURIComponent(cityNameEncoded);
+
+    createButtonFromLocalStorage(apiUrl, cityName);
+});
 
 function todayForecastCard(data) {
     const card = document.createElement('div');
