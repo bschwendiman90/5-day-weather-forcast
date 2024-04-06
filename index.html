@@ -15,7 +15,7 @@
     <main>
         <div class="col-md-3 m-3">
             <div>
-                <h1 class="m-3">Search for a City:</h1>
+                <h2 class="m-3">Search for a City:</h1>
                 <form id="search-form">
                     <input type="text"  id="search" class="form-control m-3" placeholder="Salt Lake City">
                     <button id="search-btn" class="btn btn-primary m-3">Search</button>
@@ -26,7 +26,7 @@
 
             </div>
         </div>
-        <div class="col-md-9 m-3">
+        <div class="col-md-8 m-3">
             <div id="today-forecast" class="col-md-12 m-3">
 
             </div>
@@ -38,6 +38,8 @@
             </div>
         </div>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script>dayjs().format()</script>
     <script src="./index.js"></script>
 </body>
 </html>

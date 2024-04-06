@@ -30,6 +30,16 @@ searchFormEl.addEventListener('submit', function(event) {
     })
     .then(data => {
         console.log('API response: ', data);
+        const todayForecastData = {
+            city: data.city.name,
+            date: data.list[0].dt,
+            weather: data.list[0].weather[0].main,
+            temp: data.list[0].main.temp,
+            wind: data.list[0].wind.speed,
+            humidity: data.list[0].main.humidity
+        };
+
+        todayForecastCard(todayForecastData);
 
         
     })
@@ -38,10 +48,10 @@ searchFormEl.addEventListener('submit', function(event) {
     })
     
     searchEl.value = '';
-    savedSearchButton();
+    savedSearchButton(apiUrl, formData);
 });
 
-function savedSearchButton () {
+function savedSearchButton (apiUrl, cityName) {
     const apiUrlArray = JSON.parse(localStorage.getItem('apiUrls')) || [];
     apiUrlArray.forEach(apiUrl => {
 
@@ -73,6 +83,52 @@ function savedSearchButton () {
         savedSearchEl.appendChild(button);
 
     });
+};
+
+function todayForecastCard(data) {
+    const card = document.createElement('div');
+    card.classList.add('card');
+
+    const cardBody = document.createElement('div');
+    cardBody.classList.add('card-body');
+
+    let weatherIconText;
+    if (data.weather === 'Clear') {
+        weatherIconText = '☀️'; // Sun icon
+    } else if (data.weather === 'Clouds') {
+        weatherIconText = '☁️'; // Cloud icon
+    } else if (data.weather === 'Rain') {
+        weatherIconText = '🌧️'; // Rain icon
+    } else if (data.weather === 'Snow') {
+        weatherIconText = '❄️'; // Snow icon
+    } else {
+        weatherIconText = ''; // Default empty icon
+    }
+
+    const cityNameHeader = document.createElement('h2');
+    cityNameHeader.classList.add('card-title');
+    cityNameHeader.textContent = `${data.city} ${dayjs.unix(data.date).format('M/D/YYYY')} ${weatherIconText}`;
+
+    const tempurature = document.createElement('p');
+    tempurature.classList.add('card-text')
+    tempurature.textContent = `Temp: ${data.temp}°F`;
+
+    const wind = document.createElement('p');
+    wind.classList.add('card-text')
+    wind.textContent = `wind: ${data.wind} MPH`;
+
+    const humidity = document.createElement('p');
+    humidity.classList.add('card-text')
+    humidity.textContent = `Temp: ${data.humidity} %`;
+
+    cardBody.appendChild(cityNameHeader)
+    cardBody.appendChild(tempurature)
+    cardBody.appendChild(wind)
+    cardBody.appendChild(humidity)
+    card.appendChild(cardBody)
+
+    todayForcastEl.appendChild(card)
+
 }
 
 savedSearchButton();
