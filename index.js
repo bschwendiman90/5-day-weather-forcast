@@ -162,7 +162,7 @@ function todayForecastCard(data) {
 
     const humidity = document.createElement('p');
     humidity.classList.add('card-text')
-    humidity.textContent = `Temp: ${data.humidity} %`;
+    humidity.textContent = `Humidity: ${data.humidity} %`;
 
     cardBody.appendChild(cityNameHeader)
     cardBody.appendChild(tempurature)
@@ -212,7 +212,7 @@ function fiveDayForecastCard(data, index){
 
     const humidity = document.createElement('p');
     humidity.classList.add('card-text')
-    humidity.textContent = `Temp: ${data.humidity} %`;
+    humidity.textContent = `Humidity: ${data.humidity} %`;
 
     cardBody.appendChild(cityNameHeader);
     cardBody.appendChild(weather);
