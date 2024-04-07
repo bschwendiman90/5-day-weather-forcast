@@ -126,14 +126,7 @@ function savedSearchButton (apiUrl, cityName) {
 
 };
 
-// const apiUrlArray = JSON.parse(localStorage.getItem('apiUrls')) || [];
-// apiUrlArray.forEach(apiUrl => {
-    
-//     const urlParams = new URLSearchParams(apiUrl);
-//     const cityNameEncoded = urlParams.get('q');
-//     const cityName = decodeURIComponent(cityNameEncoded);
 
-// });
 
 function todayForecastCard(data) {
     const card = document.createElement('div');
@@ -144,15 +137,15 @@ function todayForecastCard(data) {
 
     let weatherIconText;
     if (data.weather === 'Clear') {
-        weatherIconText = '☀️'; // Sun icon
+        weatherIconText = '☀️'; 
     } else if (data.weather === 'Clouds') {
-        weatherIconText = '☁️'; // Cloud icon
+        weatherIconText = '☁️'; 
     } else if (data.weather === 'Rain') {
-        weatherIconText = '🌧️'; // Rain icon
+        weatherIconText = '🌧️'; 
     } else if (data.weather === 'Snow') {
-        weatherIconText = '❄️'; // Snow icon
+        weatherIconText = '❄️'; 
     } else {
-        weatherIconText = ''; // Default empty icon
+        weatherIconText = ''; 
     }
 
     const cityNameHeader = document.createElement('h2');
@@ -183,22 +176,22 @@ function todayForecastCard(data) {
 
 function fiveDayForecastCard(data, index){
     const card = document.createElement('div');
-    card.classList.add('card', 'col-md-2', 'm-3', 'bg-secondary');
+    card.classList.add('card', 'col-md-8', 'm-3', 'bg-secondary', 'col-lg-2', 'col-12', 'col-lg-9', 'col-xl-2');
 
     const cardBody = document.createElement('div');
     cardBody.classList.add('card-body');
 
     let weatherIconText;
     if (data.weather === 'Clear') {
-        weatherIconText = '☀️'; // Sun icon
+        weatherIconText = '☀️'; 
     } else if (data.weather === 'Clouds') {
-        weatherIconText = '☁️'; // Cloud icon
+        weatherIconText = '☁️'; 
     } else if (data.weather === 'Rain') {
-        weatherIconText = '🌧️'; // Rain icon
+        weatherIconText = '🌧️'; 
     } else if (data.weather === 'Snow') {
-        weatherIconText = '❄️'; // Snow icon
+        weatherIconText = '❄️'; 
     } else {
-        weatherIconText = ''; // Default empty icon
+        weatherIconText = ''; 
     }
 
     const cityNameHeader = document.createElement('h4');
@@ -231,5 +224,16 @@ function fiveDayForecastCard(data, index){
     fiveDayForecastEl.appendChild(card);
 }
 
+function responsiveWdith () {
+    const fiveDayForecast = document.getElementById('five-day-forecast');
+    if (window.innerWidth <= 1500) {
+        fiveDayForecast.classList.remove('row')
+        
+    } else {
+        fiveDayForecast.classList.add('row')
+        
+    }
+}
 
-// savedSearchButton();
+responsiveWdith();
+window.addEventListener('resize', responsiveWdith);
