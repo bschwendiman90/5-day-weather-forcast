@@ -1,6 +1,6 @@
 const savedSearchEl = document.getElementById('search-history');
-const todayForcastEl = document.getElementById('today-forecast');
-const fiveDayForcastEl = document.getElementById('five-day-forecast');
+const todayForecastEl = document.getElementById('today-forecast');
+const fiveDayForecastEl = document.getElementById('five-day-forecast');
 const searchButtonEl = document.getElementById('search-btn');
 const searchFormEl = document.getElementById('search-form');
 const searchEl = document.getElementById('search');
@@ -31,7 +31,7 @@ searchFormEl.addEventListener('submit', function(event) {
     .then(data => {
         console.log('API response: ', data);
 
-        todayForcastEl.innerHTML = '';
+        todayForecastEl.innerHTML = '';
 
         const todayForecastData = {
             city: data.city.name,
@@ -43,6 +43,23 @@ searchFormEl.addEventListener('submit', function(event) {
         };
 
         todayForecastCard(todayForecastData);
+
+        fiveDayForecastEl.innerHTML = '';
+
+        const fiveDayData = data.list.slice(4,5).concat(data.list.slice(12,13)).concat(data.list.slice(20,21)).concat(data.list.slice(28,29)).concat(data.list.slice(36,37))
+
+        fiveDayData.forEach((dayData, index) => {
+            const fiveDayForecastData ={
+                date: dayData.dt,
+                weather: dayData.weather[0].main,
+                temp: dayData.main.temp,
+                wind: dayData.wind.speed,
+                humidity: dayData.main.humidity
+            };
+            fiveDayForecastCard(fiveDayForecastData, index);
+        });
+
+
 
         
     })
@@ -71,6 +88,34 @@ function savedSearchButton (apiUrl, cityName) {
             })
             .then(data => {
                 console.log(data);
+
+                todayForecastEl.innerHTML = '';
+
+        const todayForecastData = {
+            city: data.city.name,
+            date: data.list[0].dt,
+            weather: data.list[0].weather[0].main,
+            temp: data.list[0].main.temp,
+            wind: data.list[0].wind.speed,
+            humidity: data.list[0].main.humidity
+        };
+
+        todayForecastCard(todayForecastData);
+
+        fiveDayForecastEl.innerHTML = '';
+
+        const fiveDayData = data.list.slice(4,5).concat(data.list.slice(12,13)).concat(data.list.slice(20,21)).concat(data.list.slice(28,29)).concat(data.list.slice(36,37))
+
+        fiveDayData.forEach((dayData, index) => {
+            const fiveDayForecastData ={
+                date: dayData.dt,
+                weather: dayData.weather[0].main,
+                temp: dayData.main.temp,
+                wind: dayData.wind.speed,
+                humidity: dayData.main.humidity
+            };
+            fiveDayForecastCard(fiveDayForecastData, index);
+        });
             })
             .catch(error => {
                 console.error('Fetch error: ', error)
@@ -81,15 +126,14 @@ function savedSearchButton (apiUrl, cityName) {
 
 };
 
-const apiUrlArray = JSON.parse(localStorage.getItem('apiUrls')) || [];
-apiUrlArray.forEach(apiUrl => {
-    // Parse the API URL to extract the city name
-    const urlParams = new URLSearchParams(apiUrl);
-    const cityNameEncoded = urlParams.get('q');
-    const cityName = decodeURIComponent(cityNameEncoded);
+// const apiUrlArray = JSON.parse(localStorage.getItem('apiUrls')) || [];
+// apiUrlArray.forEach(apiUrl => {
+    
+//     const urlParams = new URLSearchParams(apiUrl);
+//     const cityNameEncoded = urlParams.get('q');
+//     const cityName = decodeURIComponent(cityNameEncoded);
 
-    createButtonFromLocalStorage(apiUrl, cityName);
-});
+// });
 
 function todayForecastCard(data) {
     const card = document.createElement('div');
@@ -133,8 +177,59 @@ function todayForecastCard(data) {
     cardBody.appendChild(humidity)
     card.appendChild(cardBody)
 
-    todayForcastEl.appendChild(card)
+    todayForecastEl.appendChild(card)
 
+};
+
+function fiveDayForecastCard(data, index){
+    const card = document.createElement('div');
+    card.classList.add('card', 'col-md-2', 'm-3', 'bg-secondary');
+
+    const cardBody = document.createElement('div');
+    cardBody.classList.add('card-body');
+
+    let weatherIconText;
+    if (data.weather === 'Clear') {
+        weatherIconText = '☀️'; // Sun icon
+    } else if (data.weather === 'Clouds') {
+        weatherIconText = '☁️'; // Cloud icon
+    } else if (data.weather === 'Rain') {
+        weatherIconText = '🌧️'; // Rain icon
+    } else if (data.weather === 'Snow') {
+        weatherIconText = '❄️'; // Snow icon
+    } else {
+        weatherIconText = ''; // Default empty icon
+    }
+
+    const cityNameHeader = document.createElement('h4');
+    cityNameHeader.classList.add('card-title');
+    cityNameHeader.textContent = `${dayjs.unix(data.date).format('M/D/YYYY')}`;
+
+    const weather = document.createElement('p');
+    weather.classList.add('card-text');
+    weather.textContent = `${weatherIconText}`
+
+    const tempurature = document.createElement('h2');
+    tempurature.classList.add('card-text')
+    tempurature.textContent = `Temp: ${data.temp}°F`;
+
+    const wind = document.createElement('p');
+    wind.classList.add('card-text')
+    wind.textContent = `wind: ${data.wind} MPH`;
+
+    const humidity = document.createElement('p');
+    humidity.classList.add('card-text')
+    humidity.textContent = `Temp: ${data.humidity} %`;
+
+    cardBody.appendChild(cityNameHeader);
+    cardBody.appendChild(weather);
+    cardBody.appendChild(tempurature);
+    cardBody.appendChild(wind);
+    cardBody.appendChild(humidity);
+    card.appendChild(cardBody);
+
+    fiveDayForecastEl.appendChild(card);
 }
 
-savedSearchButton();
+
+// savedSearchButton();
