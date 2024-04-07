@@ -14,7 +14,7 @@ searchFormEl.addEventListener('submit', function(event) {
     console.log(formData);
 
     
-    const apiUrl = `http://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(formData)}&units=imperial&appid=9ce3dde858452aa16a16dbfbb1a122f2`;
+    const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(formData)}&units=imperial&appid=9ce3dde858452aa16a16dbfbb1a122f2`;
 
     let apiUrlArray = JSON.parse(localStorage.getItem('apiUrls')) || [];
     apiUrlArray.push(apiUrl);
