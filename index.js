@@ -176,7 +176,7 @@ function todayForecastCard(data) {
 
 function fiveDayForecastCard(data, index){
     const card = document.createElement('div');
-    card.classList.add('card', 'col-md-8', 'm-3', 'bg-secondary', 'col-lg-2', 'col-12', 'col-lg-9', 'col-xl-2');
+    card.classList.add('card', 'col-md-8', 'm-3', 'bg-secondary', 'col-lg-2', 'col-12', 'col-lg-9', 'col-xl-2', 'text-white');
 
     const cardBody = document.createElement('div');
     cardBody.classList.add('card-body');
@@ -202,7 +202,7 @@ function fiveDayForecastCard(data, index){
     weather.classList.add('card-text');
     weather.textContent = `${weatherIconText}`
 
-    const tempurature = document.createElement('h2');
+    const tempurature = document.createElement('p');
     tempurature.classList.add('card-text')
     tempurature.textContent = `Temp: ${data.temp}°F`;
 
