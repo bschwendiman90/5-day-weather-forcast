@@ -158,7 +158,7 @@ function todayForecastCard(data) {
 
     const wind = document.createElement('p');
     wind.classList.add('card-text')
-    wind.textContent = `wind: ${data.wind} MPH`;
+    wind.textContent = `Wind: ${data.wind} MPH`;
 
     const humidity = document.createElement('p');
     humidity.classList.add('card-text')
@@ -208,7 +208,7 @@ function fiveDayForecastCard(data, index){
 
     const wind = document.createElement('p');
     wind.classList.add('card-text')
-    wind.textContent = `wind: ${data.wind} MPH`;
+    wind.textContent = `Wind: ${data.wind} MPH`;
 
     const humidity = document.createElement('p');
     humidity.classList.add('card-text')
