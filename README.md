@@ -10,6 +10,7 @@ When you open the web page enter a city into the search field and press search. 
 
 
 
+![Screenshot 2024-04-07 105644](https://github.com/bschwendiman90/5-day-weather-forcast/assets/146499394/e439e1b5-e42e-460a-9f77-a7f9fadc14d3)
 
 
 ## License
